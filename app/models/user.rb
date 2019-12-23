@@ -15,5 +15,10 @@ class User < ApplicationRecord
         AND order_locations_2.id IN (#{max_order_location_ids})")
       .joins("INNER JOIN bids
         ON bids.order_id == orders.id")
+      .select("users.*,
+        orders.id AS order_id,
+        order_locations_1.location AS location_start,
+        order_locations_2.location AS location_end,
+        bids.price AS bid_price")
   end)
 end
